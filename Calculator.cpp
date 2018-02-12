@@ -8,7 +8,7 @@
 #include <sstream>
 
 Calculator::Calculator(){
-	carryResult = 0;
+	calcResult = 0;
 	primaryStack = new LinkedStack();
 	undoStack = new LinkedStack();
 }
@@ -73,30 +73,34 @@ void Calculator::compute(string inputStr){
 	//Converts string to int
 	intOperand = stoi(inputStr.substr(1, strLen));
 
-	//Pushes result of last computation as int1
-	primaryStack->push(op,carryResult,intOperand);
+	//Pushes 0 into stack if empty
+	if(primaryStack->isEmpty())
+	primaryStack->push(NULL,NULL,0);
 
 	switch(op){
-	case '+': carryResult = primaryStack->peek().int1+primaryStack->peek().int2;
+	case '+': calcResult = primaryStack->peek().result+intOperand;
 	break;
-	case '-': carryResult = primaryStack->peek().int1-primaryStack->peek().int2;
+	case '-': calcResult = primaryStack->peek().result-intOperand;
 	break;
-	case '/': carryResult = primaryStack->peek().int1/primaryStack->peek().int2;
+	case '/': calcResult = primaryStack->peek().result/intOperand;
 	break;
-	case '*': carryResult = primaryStack->peek().int1*primaryStack->peek().int2;
+	case '*': calcResult = primaryStack->peek().result*intOperand;
 	break;
-	case '%': carryResult = primaryStack->peek().int1%primaryStack->peek().int2;
+	case '%': calcResult = primaryStack->peek().result%intOperand;
 	break;
 	default: cout << "Invalid operator.";
 	}
 
-	cout << carryResult;
+	//Pushes operator, operand, and result into stack
+	primaryStack->push(op,intOperand,calcResult);
+
+	cout << calcResult;
 }
 
 
 void Calculator::undo(){
 	undoStack->push(primaryStack->pop());
-	this->compute(primaryStack->pop().toString());
+	cout << primaryStack->peek().result;
 }
 
 

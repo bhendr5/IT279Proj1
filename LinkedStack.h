@@ -14,9 +14,9 @@ using namespace std;
 class StackNode{
 public:
 	char char1 = NULL;
-	int int1 = 0,int2 = 0;
+	int int1 = 0,result = 0;
 	StackNode *next = nullptr;
-	StackNode(int int1, int int2, char char1, StackNode *next);
+	StackNode(int int1, int result, char char1, StackNode *next);
 	StackNode();
 	string toString();
 };
@@ -25,7 +25,7 @@ class LinkedStack{
 public:
 	StackNode *head = nullptr;
 	int size = 0;
-	void push(char char1, int int1, int int2);
+	void push(char char1, int int1, int result);
 	void push(StackNode node);
 
 	StackNode pop();

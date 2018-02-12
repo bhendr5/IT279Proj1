@@ -13,7 +13,7 @@ class Calculator{
 public:
 	LinkedStack *primaryStack;
 	LinkedStack *undoStack;
-	int carryResult;
+	int calcResult;
 
 	//Parses input and calls appropriate function
 	void processInput();
