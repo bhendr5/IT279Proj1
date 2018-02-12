@@ -5,57 +5,63 @@
  *      Author: Ben
  */
 #include "Calculator.h"
-#include "LinkedStack.h"
 #include <string>
 #include <sstream>
 
 Calculator::Calculator(){
-
+	carryResult = 0;
+	primaryStack = new LinkedStack();
+	undoStack = new LinkedStack();
 }
 
 void Calculator::processInput(){
-	string inputStr;
-	cout << ">";
-	cin >> inputStr;
 
-	//Clear
-	if(inputStr == "C"){
-		this->clear();
+	while(true){
+
+		string inputStr;
+		cout << ">";
+		cin >> inputStr;
+
+		//Clear
+		if(inputStr == "C"){
+			this->clear();
+		}
+
+		//Undo
+		else if(inputStr == "U"){
+			this->undo();
+		}
+
+		//Redo
+		else if(inputStr == "R"){
+			this->redo();
+		}
+
+		//Quit
+		else if(inputStr == "Q"){
+			cout << endl << "Goodbye";
+			return;
+		}
+
+		//Looks for operator then calls compute
+		else if(inputStr[0] == '-' || inputStr[0] == '+' || inputStr[0] == '/' ||
+				inputStr[0] == '*' || inputStr[0] == '%'){
+			this->compute(inputStr);
+		}
+
+		//Catches invalid inputs
+		else{
+			cout << endl << "Invalid input.";
+			this->processInput();
+		}
 	}
-
-	//Undo
-	else if(inputStr == "U"){
-		this->undo();
-	}
-
-	//Redo
-	else if(inputStr == "R"){
-		this->redo();
-	}
-
-	//Quit
-	else if(inputStr == "Q"){
-		cout << endl << "Goodbye";
-	}
-
-	//Looks for operator then calls compute
-	else if(inputStr[0] == '-' || inputStr[0] == '+' || inputStr[0] == '/' ||
-			inputStr[0] == '*' || inputStr[0] == '%'){
-		this->compute(inputStr);
-	}
-
-	//Catches invalid inputs
-	else{
-		cout << endl << "Invalid input.";
-		this->processInput();
-	}
-
 }
 
-int Calculator::compute(string inputStr){
+void Calculator::compute(string inputStr){
 	int strLen;
 	int intOperand;
 	char op = inputStr[0];
+
 
 	//Measures length of input string
 	std::stringstream strStream(inputStr);
@@ -69,33 +75,37 @@ int Calculator::compute(string inputStr){
 	//Converts string to int
 	intOperand = stoi(inputStr.substr(1, strLen));
 
+	//Pushes result of last computation as int1
+	primaryStack->push(op,carryResult,intOperand);
 
 	switch(op){
-	case '+':
-		break;
-	case '-':
-		break;
-	case '/':
-		break;
-	case '*':
-		break;
-	case '%':
-		break;
+	case '+': carryResult = primaryStack->peek().int1+primaryStack->peek().int2;
+	break;
+	case '-': carryResult = primaryStack->peek().int1-primaryStack->peek().int2;
+	break;
+	case '/': carryResult = primaryStack->peek().int1/primaryStack->peek().int2;
+	break;
+	case '*': carryResult = primaryStack->peek().int1*primaryStack->peek().int2;
+	break;
+	case '%': carryResult = primaryStack->peek().int1%primaryStack->peek().int2;
+	break;
 	default: cout << "Invalid operator.";
 	}
+
+	cout << carryResult;
 }
 
 
-int Calculator::undo(){
+void Calculator::undo(){
 
 }
 
 
-int Calculator::redo(){
+void Calculator::redo(){
 
 }
 
-int Calculator::clear(){
+void Calculator::clear(){
 
 }
 
