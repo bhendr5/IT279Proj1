@@ -5,10 +5,8 @@
  *      Author: Ben
  */
 
-#include <string>
+#define __USE_MINGW_ANSI_STDIO 0
 #include "LinkedStack.h"
-using namespace std;
-
 
 StackNode::StackNode(int int1, int int2, char char1, StackNode *next){
 	this->int1 = int1;
@@ -17,8 +15,18 @@ StackNode::StackNode(int int1, int int2, char char1, StackNode *next){
 	this->next = next;
 }
 
+string StackNode::toString(){
+	return string(1, this->char1) + to_string(this->int1) + to_string(this->int2);
+}
+
 void LinkedStack::push(char char1, int int1, int int2) {
 	StackNode *temp = new StackNode(int1, int2, char1, head);
+	head = temp;
+	size++;
+}
+
+void LinkedStack::push(StackNode node) {
+	StackNode *temp = new StackNode(node);
 	head = temp;
 	size++;
 }
@@ -52,5 +60,7 @@ bool LinkedStack::isEmpty(){
 int LinkedStack::findSize(){
 	return this->size;
 }
+
+
 
 

@@ -8,8 +8,6 @@
 #ifndef CALCULATOR_H_
 #define CALCULATOR_H_
 #include "LinkedStack.h"
-#include <iostream>
-using namespace std;
 
 class Calculator{
 public:
@@ -20,7 +18,7 @@ public:
 	//Parses input and calls appropriate function
 	void processInput();
 
-	//Perfoms arthmetic operation and returns result
+	//Performs arithmetic operation and returns result
 	void compute(string inputStr);
 
 	void redo();
@@ -28,8 +26,8 @@ public:
 	void clear();
 
 	//Default constructor that creates two stacks
-	//One stack holds previous results of computations and the other holds
-	//"future" results for redoing
+	//One stack holds primary line of results while other holds
+	//"undone" results in case they need to be redone
 	Calculator();
 };
 

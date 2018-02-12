@@ -1,12 +1,11 @@
 /*
- * Stacktest.cpp
+ * Proj1Driver.cpp
  *
  *  Created on: Feb 7, 2018
  *      Author: Ben
  */
 
-#include <iostream>;
-#include "Calculator.h";
+#include "Calculator.h"
 using namespace std;
 
 int main(){

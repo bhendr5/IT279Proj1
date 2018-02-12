@@ -8,6 +8,8 @@
 #ifndef LINKEDSTACK_H_
 #define LINKEDSTACK_H_
 #include <iostream>
+#include <string>
+using namespace std;
 
 class StackNode{
 public:
@@ -16,6 +18,7 @@ public:
 	StackNode *next = nullptr;
 	StackNode(int int1, int int2, char char1, StackNode *next);
 	StackNode();
+	string toString();
 };
 
 class LinkedStack{
@@ -23,6 +26,7 @@ public:
 	StackNode *head = nullptr;
 	int size = 0;
 	void push(char char1, int int1, int int2);
+	void push(StackNode node);
 
 	StackNode pop();
 	StackNode peek();

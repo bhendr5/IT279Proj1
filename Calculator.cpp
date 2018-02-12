@@ -5,7 +5,6 @@
  *      Author: Ben
  */
 #include "Calculator.h"
-#include <string>
 #include <sstream>
 
 Calculator::Calculator(){
@@ -52,7 +51,6 @@ void Calculator::processInput(){
 		//Catches invalid inputs
 		else{
 			cout << endl << "Invalid input.";
-			this->processInput();
 		}
 	}
 }
@@ -97,7 +95,8 @@ void Calculator::compute(string inputStr){
 
 
 void Calculator::undo(){
-
+	undoStack->push(primaryStack->pop());
+	this->compute(primaryStack->pop().toString());
 }
 
 
