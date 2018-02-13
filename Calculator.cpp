@@ -75,9 +75,9 @@ void Calculator::compute(string inputStr){
 	intOperand = stoi(inputStr.substr(1, strLen));
 
 	//Pushes 0 into stack if empty
-	if(primaryStack->isEmpty())
+	if(primaryStack->isEmpty()){
 		primaryStack->push(NULL,NULL,0);
-
+	}
 	switch(op){
 	case '+': calcResult = primaryStack->peek().result+intOperand;
 	break;
@@ -95,27 +95,32 @@ void Calculator::compute(string inputStr){
 	//Pushes operator, operand, and result into stack
 	primaryStack->push(op,intOperand,calcResult);
 
-	cout << calcResult;
+	cout << calcResult << endl;
 }
 
 
 void Calculator::undo(){
-	undoStack->push(primaryStack->pop());
-	cout << primaryStack->peek().result;
+	StackNode temp = primaryStack->pop();
+	if (temp.char1 != 'c') {
+		undoStack->push(temp);
+	}
+	cout << primaryStack->peek().result << endl;
 }
 
 
 void Calculator::redo(){
-	if(!undoStack->isEmpty()){
+	if(!undoStack->isEmpty()){		
 		compute(string(1, undoStack->peek().char1) + to_string(undoStack->peek().int1));
 		undoStack->pop();
 	}
 	else{
-		cout << "Nothing left to undo." << endl;
+		cout << "No operations to redo" << endl;
+		cout << primaryStack->peek().result << endl;
 	}
 }
 
 void Calculator::clear(){
-
+	primaryStack->push('c',0,0);
+	cout << primaryStack->peek().result << endl;
 }
 

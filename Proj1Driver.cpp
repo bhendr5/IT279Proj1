@@ -25,11 +25,13 @@ int main(){
 	cout << "Enter 1 for calculator or 2 for checkout line: ";
 	cin >> input;
 	if(input == 1){
+		cout << "This is a calculator." << endl;
 		Calculator *calc = new Calculator();
 		calc->processInput();
 	}
 
 	else if(input == 2){
+		cout << "This is a checkout line."<< endl;
         linkedQueue<int> *line = new linkedQueue<int>;
         string input;
         cout << "Customers will arrive in random integer intervals of 1 to x minutes" << endl;
