@@ -19,7 +19,7 @@ void Calculator::processInput(){
 	while(true){
 
 		string inputStr;
-		cout << ">";
+		cout << endl << ">";
 		cin >> inputStr;
 
 		//Clear
@@ -100,7 +100,12 @@ void Calculator::compute(string inputStr){
 
 
 void Calculator::undo(){
-	undoStack->push(primaryStack->pop());
+
+	StackNode *temp = new StackNode(primaryStack->peek().char1,
+			primaryStack->peek().int1,
+			primaryStack->peek().result, undoStack->head);
+	primaryStack->pop();
+	undoStack->push(*temp);
 	cout << primaryStack->peek().result;
 }
 
@@ -110,6 +115,7 @@ void Calculator::redo(){
 		compute(string(1, undoStack->peek().char1) + to_string(undoStack->peek().int1));
 		undoStack->pop();
 	}
+
 	else{
 		cout << "Nothing left to undo." << endl;
 	}

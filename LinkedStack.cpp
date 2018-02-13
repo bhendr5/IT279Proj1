@@ -40,6 +40,7 @@ StackNode LinkedStack::pop(){
 	else {
 		StackNode *result = head;
 		head = head->next;
+		size--;
 		return *result;
 	}
 }
