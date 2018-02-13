@@ -4,6 +4,7 @@
  *  Created on: Feb 7, 2018
  *      Author: Ben
  */
+#define __USE_MINGW_ANSI_STDIO 0
 #include "Calculator.h"
 #include <sstream>
 
@@ -75,7 +76,7 @@ void Calculator::compute(string inputStr){
 
 	//Pushes 0 into stack if empty
 	if(primaryStack->isEmpty())
-	primaryStack->push(NULL,NULL,0);
+		primaryStack->push(NULL,NULL,0);
 
 	switch(op){
 	case '+': calcResult = primaryStack->peek().result+intOperand;
@@ -105,7 +106,13 @@ void Calculator::undo(){
 
 
 void Calculator::redo(){
-
+	if(!undoStack->isEmpty()){
+		compute(string(1, undoStack->peek().char1) + to_string(undoStack->peek().int1));
+		undoStack->pop();
+	}
+	else{
+		cout << "Nothing left to undo." << endl;
+	}
 }
 
 void Calculator::clear(){

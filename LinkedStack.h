@@ -16,7 +16,7 @@ public:
 	char char1 = NULL;
 	int int1 = 0,result = 0;
 	StackNode *next = nullptr;
-	StackNode(int int1, int result, char char1, StackNode *next);
+	StackNode(char char1, int int1, int result, StackNode *next);
 	StackNode();
 	string toString();
 };

@@ -8,7 +8,7 @@
 #define __USE_MINGW_ANSI_STDIO 0
 #include "LinkedStack.h"
 
-StackNode::StackNode(int int1, int result, char char1, StackNode *next){
+StackNode::StackNode(char char1, int int1, int result, StackNode *next){
 	this->int1 = int1;
 	this->result = result;
 	this->char1 = char1;
@@ -19,8 +19,9 @@ string StackNode::toString(){
 	return string(1, this->char1) + to_string(this->int1) + to_string(this->result);
 }
 
+
 void LinkedStack::push(char char1, int int1, int result) {
-	StackNode *temp = new StackNode(int1, result, char1, head);
+	StackNode *temp = new StackNode(char1,int1, result, head);
 	head = temp;
 	size++;
 }
