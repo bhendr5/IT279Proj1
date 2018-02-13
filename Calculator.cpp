@@ -95,21 +95,20 @@ void Calculator::compute(string inputStr){
 	//Pushes operator, operand, and result into stack
 	primaryStack->push(op,intOperand,calcResult);
 
-	cout << calcResult << endl;
+	//Empty undoStack
+	while( !undoStack->isEmpty() ) {
+		undoStack->pop();
+	}
+	
+	cout << calcResult;
 }
 
 
 void Calculator::undo(){
-
-	StackNode *temp = new StackNode(primaryStack->peek().char1,
+	undoStack->push(primaryStack->peek().char1,
 			primaryStack->peek().int1,
-			primaryStack->peek().result, undoStack->head);
+			primaryStack->peek().result);
 	primaryStack->pop();
-
-	//Will not push clear operations into stack so that they cannot be redone
-	if (temp->char1 != 'c')
-		undoStack->push(*temp);
-
 	cout << primaryStack->peek().result;
 
 }
@@ -117,19 +116,22 @@ void Calculator::undo(){
 
 void Calculator::redo(){
 	if(!undoStack->isEmpty()){		
-		compute(string(1, undoStack->peek().char1) + to_string(undoStack->peek().int1));
+		primaryStack->push(undoStack->peek().char1,
+			undoStack->peek().int1,
+			undoStack->peek().result);
 		undoStack->pop();
+		cout << primaryStack->peek().result;
 	}
 
 	else{
 		cout << "No operations to redo" << endl;
-		cout << primaryStack->peek().result << endl;
+		cout << primaryStack->peek().result;
 	}
 }
 
 void Calculator::clear(){
 	primaryStack->push('c',0,0);
-	cout << primaryStack->peek().result << endl;
+	cout << primaryStack->peek().result;
 
 }
 
