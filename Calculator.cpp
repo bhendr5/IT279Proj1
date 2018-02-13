@@ -105,7 +105,11 @@ void Calculator::undo(){
 			primaryStack->peek().int1,
 			primaryStack->peek().result, undoStack->head);
 	primaryStack->pop();
-	undoStack->push(*temp);
+
+	//Will not push clear operations into stack so that they cannot be redone
+	if (temp->char1 != 'c')
+		undoStack->push(*temp);
+
 	cout << primaryStack->peek().result;
 }
 
@@ -117,11 +121,13 @@ void Calculator::redo(){
 	}
 
 	else{
-		cout << "Nothing left to undo." << endl;
+		cout << "No operations to redo." << endl;
+		cout << primaryStack->peek().result;
 	}
 }
 
 void Calculator::clear(){
-
+	primaryStack->push('c',0,0);
+	cout << primaryStack->peek().result;
 }
 
