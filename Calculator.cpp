@@ -9,8 +9,14 @@
 #include <sstream>
 
 Calculator::Calculator(){
+
+	//Variable to help store calculation results before passing to a stack node
 	calcResult = 0;
+
+	//Primary stack holds computation history and results
 	primaryStack = new LinkedStack();
+
+	//Undostack holds operations that are undone in case they need to be redone
 	undoStack = new LinkedStack();
 }
 
@@ -62,7 +68,7 @@ void Calculator::compute(string inputStr){
 	char op = inputStr[0];
 
 
-	//Measures length of input string
+	//Measures length of input string in order to determine integer size
 	std::stringstream strStream(inputStr);
 	string n;
 	while(strStream){
@@ -74,10 +80,13 @@ void Calculator::compute(string inputStr){
 	//Converts string to int
 	intOperand = stoi(inputStr.substr(1, strLen));
 
-	//Pushes 0 into stack if empty
+	//Pushes null node with 0 result into stack if empty
 	if(primaryStack->isEmpty()){
 		primaryStack->push(NULL,NULL,0);
 	}
+
+	//Switch block performs appropriate operation on inputted integer
+	//and previous node result
 	switch(op){
 	case '+': calcResult = primaryStack->peek().result+intOperand;
 	break;
@@ -103,7 +112,7 @@ void Calculator::compute(string inputStr){
 	cout << calcResult;
 }
 
-
+//Pops a node from primaryStack and pushes into undoStack
 void Calculator::undo(){
 	undoStack->push(primaryStack->peek().char1,
 			primaryStack->peek().int1,
@@ -113,7 +122,7 @@ void Calculator::undo(){
 
 }
 
-
+//Pops a node from undoStack and pushes into primaryStack
 void Calculator::redo(){
 	if(!undoStack->isEmpty()){		
 		primaryStack->push(undoStack->peek().char1,
@@ -123,15 +132,23 @@ void Calculator::redo(){
 		cout << primaryStack->peek().result;
 	}
 
+	//If undoStack is empty then there are no operations left to redo
 	else{
 		cout << "No operations to redo" << endl;
 		cout << primaryStack->peek().result;
 	}
 }
 
+//Pushes a node equal to zero in the stack to perform a clear operation
 void Calculator::clear(){
 	primaryStack->push('c',0,0);
 	cout << primaryStack->peek().result;
 
+}
+
+int main(){
+	cout << "Calculator: " << endl;
+	Calculator *calc = new Calculator();
+	calc->processInput();
 }
 

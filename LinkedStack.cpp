@@ -8,6 +8,7 @@
 #define __USE_MINGW_ANSI_STDIO 0
 #include "LinkedStack.h"
 
+//Each Node holds two integers, one char, and a pointer to the next node
 StackNode::StackNode(char char1, int int1, int result, StackNode *next){
 	this->int1 = int1;
 	this->result = result;

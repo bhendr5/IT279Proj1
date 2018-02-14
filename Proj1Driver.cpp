@@ -19,18 +19,13 @@ int numInput(string str) {
 }
 
 
-int main(){
+int oldMain(){
 	int input = 0;
 
 	cout << "Enter 1 for calculator or 2 for checkout line: ";
 	cin >> input;
-	if(input == 1){
-		cout << "Calculator: " << endl;
-		Calculator *calc = new Calculator();
-		calc->processInput();
-	}
 
-	else if(input == 2){
+	if(input == 2){
         linkedQueue<int> *line = new linkedQueue<int>;
         string input;
         cout << "Customers will arrive in random integer intervals of 1 to x minutes" << endl;
